@@ -1,0 +1,21 @@
+{
+    "model_name": "NousResearch/Meta-Llama-3-8B",
+    "quantize": true,
+    "bnb_config": {
+        "load_in_4bit": true,
+        "bnb_4bit_quant_type": "nf4",
+        "bnb_4bit_use_double_quant": true,
+        "bnb_4bit_compute_dtype": "float16"
+    },
+    "dataset": {
+        "name": "wikitext",
+        "subset": "wikitext-2-raw-v1",
+        "split": "test",
+        "batch_size": 8
+    },
+    "num_blocks_to_prune": 2,
+    "pruning_method": "angular_distance",
+    "pruning_token": "last",
+    "save_directory": "llama_pruned_model",
+    "log_file": "pruning.log"
+}
