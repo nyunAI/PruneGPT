@@ -31,7 +31,6 @@ class ModelPruner:
         # pruned_model.load_state_dict(self.model.state_dict())
 
         # Prune the blocks
-        print(blocks_to_prune)
         layers = []
         for i, layer in enumerate(self.model.model.layers):
             if i in blocks_to_prune:
@@ -52,6 +51,8 @@ class ModelPruner:
         Parameters:
         - dataloader (DataLoader): DataLoader for the dataset.
         - tokenizer (Tokenizer): Tokenizer for the model inputs.
+        - pruning_method (str, optional): Pruning method to use. One of "angular_distance", "cosine_similarity.
+        - pruning_token (str, optional): Pruning token to use. One of "all", "last".
 
         Returns:
         - list: List of BI scores for each block.

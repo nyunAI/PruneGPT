@@ -4,15 +4,14 @@ from torch.distributed import init_process_group
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 
 class ModelManager:
-    def __init__(self, model_name, fsdp_config=None):
+    def __init__(self, model_name):
         self.model_name = model_name
-        self.fsdp_config = fsdp_config
         self.model = None
         self.tokenizer = None
 
     def load_model_and_tokenizer(self, quantize=False, bnb_config=None):
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-        self.tokenizer.pad_token = self.tokenizer.eos_token ## For LLaMA3
+        # self.tokenizer.pad_token = self.tokenizer.eos_token ## For llama3
         if quantize and bnb_config:
             self.model = AutoModelForCausalLM.from_pretrained(
                 self.model_name,
@@ -21,7 +20,7 @@ class ModelManager:
                 device_map="auto",
             )
         else:
-            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, torch_dtype=torch.float16,device_map="auto")
+            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, torch_dtype=torch.float16, device_map="auto")
 
     def export_model(self, save_directory):
         self.model.save_pretrained(save_directory)

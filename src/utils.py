@@ -2,7 +2,7 @@ import os
 import logging
 import json
 
-class Utils:
+class LoggingManager:
     @staticmethod
     def ensure_directory_exists(directory: str):
         if not os.path.exists(directory):
