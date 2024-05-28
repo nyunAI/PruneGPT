@@ -8,17 +8,23 @@ class ModelPruner:
     def __init__(self, model: PreTrainedModel):
         self.model = model
 
-    def prune_model_blocks(self, importance_scores: list, num_blocks_to_prune: int) -> PreTrainedModel:
+    def prune_model_blocks(self, importance_scores: list, num_blocks_to_prune: int, skip_blocks: list = None) -> PreTrainedModel:
         """
         Prunes blocks from the transformer model based on the importance scores.
 
         Parameters:
         - importance_scores (list): List of importance scores for each block.
         - num_blocks_to_prune (int): Number of blocks to prune from the model.
+        - skip_blocks (list, optional): List of block indices to skip. Defaults to None.
 
         Returns:
         - PreTrainedModel: The pruned transformer model.
         """
+
+        # Assign max score to skip blocks
+        if skip_blocks:
+            for block in skip_blocks:
+                importance_scores[block] = max(importance_scores)
 
         # Sort blocks by importance score
         sorted_blocks = sorted(range(len(importance_scores)), key=lambda i: importance_scores[i])

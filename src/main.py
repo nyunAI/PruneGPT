@@ -24,6 +24,7 @@ def main(path):
     quantize = config_manager.get("quantize")
     dataset_config = config_manager.get("dataset")
     num_blocks_to_prune = config_manager.get("num_blocks_to_prune")
+    skip_blocks = config_manager.get("skip_blocks")
     save_directory = config_manager.get("save_directory")
     calculate_ppl = config_manager.get("calculate_ppl")
     log_file = config_manager.get("log_file")
@@ -49,7 +50,9 @@ def main(path):
     LoggingManager.log_info(f"Pruning {num_blocks_to_prune} blocks using {pruning_method} and {pruning_token} tokens.")
 
     # Prune model based on block importance scores
-    model_manager.model = pruner.prune_model_blocks(bi_scores, num_blocks_to_prune)
+    model_manager.model = pruner.prune_model_blocks(bi_scores, num_blocks_to_prune, skip_blocks)
+    num_params = model_manager.model.num_parameters()
+    LoggingManager.log_info(f"Number of parameters post pruning: {num_params}")
 
     # Calculate perplexity on Wikitext2 dataset
     if calculate_ppl:

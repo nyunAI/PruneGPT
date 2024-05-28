@@ -1,7 +1,20 @@
 # PruneGPT
 
 ## Overview
-This framework provides tools for pruning layers in Large Language Models (LLMs). Currently, quantization via bitsandbytes is supported for loading the model and computing the pruning criterion. Any pruning job can be defined by a valid [config.json](configs/config.json) and started by calling [main.py](src/main.py).
+This minimilistic framework provides tools for pruning layers in Large Language Models (LLMs). Currently, quantization via bitsandbytes is supported for loading the model and computing the pruning criterion. Any pruning job can be defined by a valid [config.json](configs/config.json) and started by calling [main.py](src/main.py).
+
+## Pruning Results
+
+The following table summarizes the wikitext2 perplexity of pruning on different models.
+
+| # Blocks | Meta-Llama-3-8B                  |                               |                  | Phi-3-mini-8k-instruct                      |                               |                  | Mistral-7B-Instruct-v0.3                  |                               |                  |
+|----------|-------------------------|-------------------------------|------------------|---------------------------|-------------------------------|------------------|---------------------------|-------------------------------|------------------|
+|          | #Param                  | Angular                       | Cosine           | #Param                    | Angular                       | Cosine           | #Param                    | Angular                       | Cosine           |
+| Baseline | 8.0                        |  6.14                             |  -                |  3.8                         |  6.35                             |  -                |    7.2                       | 5.31                              |  -                |
+| 2        |  7.6                       |  7.92                             |  7.92                |      3.6                     |  9.27                             |  7.60                |  6.8                         |  6.21                             |  7.68                |
+| 4        |  7.2                       |   10.70                            |  10.70                |   3.4                        |  15.82                             |  22.83                |   6.4                        |  7.94                             |   13.67               |
+| 6        |  6.7                       |   17.82                            |  17.82                |    3.1                       |  27.31                             |  45.86                |  5.9                         |  10.97                             |  16.17                |
+| 8        |  6.3                       |   83.23                            | 83.23                 |   2.9                        |  45.86                             |  90.52                |   5.5                        |  23.93                             |  20.46                |
 
 ## Installation
 
@@ -43,6 +56,8 @@ A sample config is provided here. Below is a breakdown of each parameter within 
 ### Pruning Parameters
 - **`num_blocks_to_prune`**: Total number of model blocks to prune.  
   Integer value: `5`
+- **`skip_blocks`**: Block indexed to skip while pruning.
+  List: [0,1,2,3,-1,-2]
 - **`pruning_method`**: Methodology used for pruning. We currently support [angular_distance](https://arxiv.org/abs/2403.17887) and [cosine_similarity](https://arxiv.org/abs/2403.03853).
 - **`pruning_token`**: Tokens used for computing pruning metrics.
   Example: `"all" or "last"`
@@ -60,3 +75,28 @@ This codebase is open-source and free to use for non-commercial purposes.
 
 ## Support
 For issues and support, please file an issue in the repository issue tracker.
+
+## Citing:
+
+If you use PruneGPT in your research, please cite the original research works!
+
+```bibtext
+@misc{gromov2024unreasonable,
+      title={The Unreasonable Ineffectiveness of the Deeper Layers}, 
+      author={Andrey Gromov and Kushal Tirumala and Hassan Shapourian and Paolo Glorioso and Daniel A. Roberts},
+      year={2024},
+      eprint={2403.17887},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
+```bibtext
+@misc{men2024shortgpt,
+      title={ShortGPT: Layers in Large Language Models are More Redundant Than You Expect}, 
+      author={Xin Men and Mingyu Xu and Qingyu Zhang and Bingning Wang and Hongyu Lin and Yaojie Lu and Xianpei Han and Weipeng Chen},
+      year={2024},
+      eprint={2403.03853},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```

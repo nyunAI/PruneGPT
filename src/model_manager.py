@@ -11,16 +11,17 @@ class ModelManager:
 
     def load_model_and_tokenizer(self, quantize=False, bnb_config=None):
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-        # self.tokenizer.pad_token = self.tokenizer.eos_token ## For llama3
+        self.tokenizer.pad_token = self.tokenizer.eos_token ## For llama3 mistral3
         if quantize and bnb_config:
             self.model = AutoModelForCausalLM.from_pretrained(
                 self.model_name,
                 quantization_config=bnb_config,
                 torch_dtype=torch.float16,
                 device_map="auto",
+                trust_remote_code=True
             )
         else:
-            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, torch_dtype=torch.float16, device_map="auto")
+            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, torch_dtype=torch.float16, device_map="auto", trust_remote_code=True)
 
     def export_model(self, save_directory):
         self.model.save_pretrained(save_directory)

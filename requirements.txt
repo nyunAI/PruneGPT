@@ -3,3 +3,4 @@ transformers
 datasets
 bitsandbytes
 accelerate
+sentencepiece
