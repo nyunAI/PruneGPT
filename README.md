@@ -3,6 +3,15 @@
 ## Overview
 This minimilistic framework provides tools for pruning layers in Large Language Models (LLMs). Currently, quantization via bitsandbytes is supported for loading the model and computing the pruning criterion. Any pruning job can be defined by a valid [config.json](configs/config.json) and started by calling [main.py](src/main.py).
 
+## ToDo
+
+- [ ] Add support for width pruning [FLAP](https://arxiv.org/abs/2312.11983)
+- [ ] Add support for Taylor and PPL metric [Shortened LLaMA](https://arxiv.org/pdf/2402.02834)
+- [ ] Benchmark training-free pruning of larger models 
+  - [ ] Meta-Llama-3-70B
+  - [ ] mixtral-8x22B-v0.3
+  - [ ] Phi-3-medium-4k-instruct
+
 ## Pruning Results
 
 The following table summarizes the wikitext2 perplexity of pruning on different models.
@@ -31,7 +40,7 @@ A sample config is provided here. Below is a breakdown of each parameter within 
 - **`quantize`**: Enables or disables the quantization of model weights via bitsandbytes.  
   Boolean value: `true` or `false`
 
-### Bit Packing and Quantization (BnB Config)
+### Quantization Configuration (BnB Config)
 - **`bnb_config`**:
   - **`load_in_4bit`**: Loads model weights in 4-bit precision to reduce memory footprint.  
     Boolean value: `true` or `false`
@@ -70,13 +79,13 @@ A sample config is provided here. Below is a breakdown of each parameter within 
 - **`calculate_ppl`**: Calculates and logs the perplexity of the pruned model to evaluate performance.  
   Boolean value: `true` or `false`
 
-## Licsence
+## License
 This codebase is open-source and free to use for non-commercial purposes.
 
 ## Support
 For issues and support, please file an issue in the repository issue tracker.
 
-## Citing:
+## Citation
 
 If you use PruneGPT in your research, please cite the original research works!
 
