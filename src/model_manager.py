@@ -25,6 +25,7 @@ class ModelManager:
 
     def export_model(self, save_directory):
         self.model.save_pretrained(save_directory)
+        self.tokenizer.save_pretrained(save_directory)
 
     def get_tokenizer(self):
         return self.tokenizer

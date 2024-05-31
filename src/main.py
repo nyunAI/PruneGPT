@@ -41,7 +41,7 @@ def main(path):
     model_manager.load_model_and_tokenizer(quantize=quantize, bnb_config=bnb_config)
 
     # Load dataset and create dataloader
-    dataset = load_dataset(dataset_config["name"], dataset_config["subset"], split=dataset_config["split"]).select(list(range(100))) # 100 samples for pruning metric computation
+    dataset = load_dataset(dataset_config["name"], dataset_config["subset"], split=dataset_config["split"]).filter(lambda example: len(example["text"].split())>100).select(list(range(100))) # 100 samples for pruning metric computation
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=dataset_config["batch_size"], shuffle=True)
 
     # Initialize model pruner and calculate block importance scores
@@ -67,6 +67,6 @@ def main(path):
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
-    argparser.add_argument("--config_path", type=str, default="configs/config.json")
+    argparser.add_argument("--config_path", type=str, default="/home/azureuser/arnav/PruneGPT/configs/config.json")
     args = argparser.parse_args()
     main(args.config_path)
