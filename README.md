@@ -8,13 +8,25 @@ This minimilistic framework provides tools for pruning layers in Large Language 
 - [ ] Add support for width pruning [FLAP](https://arxiv.org/abs/2312.11983)
 - [ ] Add support for Taylor and PPL metric [Shortened LLaMA](https://arxiv.org/pdf/2402.02834)
 - [ ] Benchmark training-free pruning of larger models 
-  - [ ] Meta-Llama-3-70B
+  - [x] Meta-Llama-3-70B
   - [ ] mixtral-8x22B-v0.3
   - [ ] Phi-3-medium-4k-instruct
 
 ## Pruning Results
 
-The following table summarizes the wikitext2 perplexity of pruning on different models.
+The following table summarizes downstream task performance of pruning on larger models -
+
+|  | MBZUAI K2-65B | Meta-Llama2-70B | Meta-Llama3-70B | Nyun-Llama3-62B | Nyun-Llama3-60B |
+| --- | --- | --- | --- | --- | --- | 
+| MMLU (5-shot) | 67.9 | 69.7 | 79.5 | 78.9 | 78.6 | 
+| Winogrande (5-shot) | 77.0 | 81.8 | 83.1 | 83.3 | 83.4 | 
+| BoolQ (0-shot) | 83.0 | 73.1 | 79.0 | 85.3 | 85.2 | 
+| Hellaswag (10-shot) | 85.5 | 86.9 | 88.0 | 85.8 | 85.7 |  
+| Arc Challenge (25-shot) | 64.8 | 67.2 | 68.8 | 65.9 | 64.4 |  
+| GSM8K (5-shot) | 50.2 | 52.6 | 76.9 | 70.9 | 68.7 |  
+| Average | 71.4 |  71.9 | 79.2 | 78.4 | 77.7 |  
+
+The following table summarizes the wikitext2 perplexity of pruning on smaller models -
 
 | # Blocks | Meta-Llama-3-8B                  |                               |                  | Phi-3-mini-8k-instruct                      |                               |                  | Mistral-7B-Instruct-v0.3                  |                               |                  |
 |----------|-------------------------|-------------------------------|------------------|---------------------------|-------------------------------|------------------|---------------------------|-------------------------------|------------------|
