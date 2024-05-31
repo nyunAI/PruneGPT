@@ -12,6 +12,12 @@ This minimilistic framework provides tools for pruning layers in Large Language 
   - [ ] mixtral-8x22B-v0.3
   - [ ] Phi-3-medium-4k-instruct
 
+## Huggingface Models
+
+[nyun-llama3-62B](https://huggingface.co/nyunai/nyun-llama3-62B/)
+
+[nyun-llama3-60B](https://huggingface.co/nyunai/nyun-llama3-60B/)
+
 ## Pruning Results
 
 The following table summarizes downstream task performance of pruning on larger models -
@@ -101,6 +107,14 @@ For issues and support, please file an issue in the repository issue tracker.
 
 If you use PruneGPT in your research, please cite the original research works!
 
+```bibtext
+@article{chavan2024surgical,
+  title={Surgical Feature-Space Decomposition of LLMs: Why, When and How?},
+  author={Chavan, Arnav and Lele, Nahush and Gupta, Deepak},
+  journal={arXiv preprint arXiv:2405.13039},
+  year={2024}
+}
+```
 ```bibtext
 @misc{gromov2024unreasonable,
       title={The Unreasonable Ineffectiveness of the Deeper Layers}, 
